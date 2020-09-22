@@ -28,11 +28,10 @@ class InjectDetector
             // no-op.
         }
 
-        if (! $response instanceof Response) {
-            return $next($request);
+        // Inject the detector when returning an HTTP response
+        if ($response instanceof Response) {
+            $this->detector->injectDetector($request, $response);
         }
-
-        $this->detector->injectDetector($request, $response);
 
         return $response;
     }
